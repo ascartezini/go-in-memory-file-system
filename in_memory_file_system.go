@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -12,11 +11,11 @@ type File struct {
 	Content  string
 }
 
-type FileSystem struct {
+type InMemoryFileSystem struct {
 	Root *File
 }
 
-func (fs FileSystem) Ls(path string) []string {
+func (fs InMemoryFileSystem) Ls(path string) []string {
 	paths := strings.Split(path, "/")
 	fileNode := fs.Root
 
@@ -37,7 +36,7 @@ func (fs FileSystem) Ls(path string) []string {
 	return keys
 }
 
-func (fs FileSystem) MkDir(path string) {
+func (fs InMemoryFileSystem) MkDir(path string) {
 	paths := strings.Split(path, "/")
 	fileNode := fs.Root // file node starts with root
 
@@ -56,15 +55,4 @@ func (fs FileSystem) MkDir(path string) {
 		// sets the current filenode as root
 		fileNode = fileNode.Children[v]
 	}
-}
-
-func main() {
-	fs := FileSystem{&File{IsDir: true, Name: "/"}}
-	fs.MkDir("/apps/golang/pointers")
-	fs.MkDir("/apps/golang/concurrency")
-	fs.MkDir("/apps/nodejs/streams")
-	fs.MkDir("/apps/nodejs/event-loop")
-	fs.MkDir("/docs")
-	fs.MkDir("/images")
-	fmt.Println(fs.Ls("/"))
 }
