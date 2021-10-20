@@ -26,6 +26,40 @@ func TestInMemoryFileSystem_MkDir(t *testing.T) {
 				"golang": true,
 				"nodejs": true},
 		},
+		{
+			name: "golang_folder_should_have_two_sub_folders",
+			path: "/apps/golang",
+			want: map[string]bool{
+				"pointers":    true,
+				"concurrency": true},
+		},
+		{
+			name: "pointers_folder_should_have_no_sub_folders",
+			path: "/apps/golang/pointers",
+			want: map[string]bool{},
+		},
+		{
+			name: "concurrency_folder_should_have_no_sub_folders",
+			path: "/apps/golang/concurrency",
+			want: map[string]bool{},
+		},
+		{
+			name: "nodejs_folder_should_have_two_sub_folders",
+			path: "/apps/nodejs",
+			want: map[string]bool{
+				"streams":    true,
+				"event-loop": true},
+		},
+		{
+			name: "streams_folder_should_have_no_sub_folders",
+			path: "/apps/nodejs/streams",
+			want: map[string]bool{},
+		},
+		{
+			name: "event-loop_folder_should_have_no_sub_folders",
+			path: "/apps/nodejs/event-loop",
+			want: map[string]bool{},
+		},
 	}
 
 	fs := InMemoryFileSystem{&File{IsDir: true, Name: "/"}}
