@@ -30,15 +30,12 @@ func (fs FileSystem) Ls(path string) []string {
 
 	// reads all children filenodes of the last sub path
 	keys := []string{}
-	for k, v := range fileNode.Children {
+	for k := range fileNode.Children {
 		keys = append(keys, k)
-		doNothing(v)
 	}
 
 	return keys
 }
-
-func doNothing(v interface{}) {}
 
 func (fs FileSystem) MkDir(path string) {
 	paths := strings.Split(path, "/")
