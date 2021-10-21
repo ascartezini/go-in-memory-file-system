@@ -88,3 +88,47 @@ func TestInMemoryFileSystem_MkDir(t *testing.T) {
 		})
 	}
 }
+
+func TestInMemoryFileSystem_WriteFile(t *testing.T) {
+	tests := []struct {
+		name            string
+		path            string
+		wantFileName    string
+		wantFileContent string
+	}{
+		{
+			name:            "root_folder_should_have_three_sub_folders",
+			path:            "/golang/main.go",
+			wantFileName:    "main.go",
+			wantFileContent: "package main",
+		},
+		{
+			name:            "apps_folder_should_have_two_sub_folders",
+			path:            "/docs/help.txt",
+			wantFileName:    "help.txt",
+			wantFileContent: "Golang help",
+		},
+	}
+
+	fs := InMemoryFileSystem{&File{IsDir: true, Name: "/"}}
+	fs.MkDir("/golang")
+	fs.WriteFile("/golang/main.go", "package main")
+
+	fs.MkDir("/docs")
+	fs.WriteFile("/docs/help.txt", "Golang help")
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := fs.ReadFile(tt.path)
+
+			if got.Name != tt.wantFileName {
+				t.Errorf(fmt.Sprintf(`got "%s", want "%s"`, got.Name, tt.wantFileName))
+			}
+
+			if got.Content != tt.wantFileContent {
+				t.Errorf(fmt.Sprintf(`got "%s", want "%s"`, got.Content, tt.wantFileContent))
+			}
+
+		})
+	}
+}
