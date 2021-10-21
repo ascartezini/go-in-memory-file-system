@@ -97,13 +97,13 @@ func TestInMemoryFileSystem_WriteFile(t *testing.T) {
 		wantFileContent string
 	}{
 		{
-			name:            "root_folder_should_have_three_sub_folders",
+			name:            "golang_folder_should_have_file_named_main.go",
 			path:            "/golang/main.go",
 			wantFileName:    "main.go",
 			wantFileContent: "package main",
 		},
 		{
-			name:            "apps_folder_should_have_two_sub_folders",
+			name:            "docs_folder_should_have_file_named_help.txt",
 			path:            "/docs/help.txt",
 			wantFileName:    "help.txt",
 			wantFileContent: "Golang help",
